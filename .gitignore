@@ -1,0 +1,30 @@
+# Java
+*.class
+target/
+*.jar
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.settings/
+.classpath
+.project
+
+# Test reports
+test-output/
+allure-results/
+allure-report/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# macOS
+.DS_Store
