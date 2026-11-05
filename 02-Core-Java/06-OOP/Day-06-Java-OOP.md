@@ -1234,3 +1234,567 @@ Design principles:
 - [ ] Push notes and programs to GitHub.
 
 **Expected outcome:** Be able to design reusable Java classes, explain all four OOP pillars, implement inheritance and polymorphism, and confidently explain how OOP principles are applied in a real-time Selenium automation framework.
+
+Object-Oriented Programming (OOP)
+27 Questions with interview-ready answers
+1. What are the four pillars of OOP?
+Java is an object-oriented programming language based on four main principles: Encapsulation, Inheritance, Polymorphism, and Abstraction.
+- Encapsulation: Wrapping data and methods into a single unit and restricting direct access to data.
+- Inheritance: Acquiring properties and methods from a parent class to promote code reusability.
+- Polymorphism: One method or behavior taking different forms through overloading and overriding.
+- Abstraction: Hiding implementation details and exposing only essential functionality.
+These principles help us develop reusable, maintainable, flexible, and scalable applications.
+
+QA automation example:
+- Encapsulation: Page Object Model classes.
+- Inheritance: BaseTest and child test classes.
+- Polymorphism: Method overloading and overriding in utility classes.
+- Abstraction: WebDriver interface and browser implementations.
+2. Explain encapsulation with a real-time example.
+Encapsulation is the process of wrapping data and methods into a single class and restricting direct access to the data.
+
+In Java, we achieve encapsulation by declaring variables as private and providing public getter and setter methods to access or update them.
+
+For example, in a LoginPage class, I can declare username and password fields as private and provide methods such as enterUsername() and enterPassword().
+
+This ensures that the internal implementation is controlled and accessed through defined methods.
+
+Java example:
+public class LoginPage {
+
+    private String username;
+    private String password;
+
+    public void enterUsername(String username) {
+        this.username = username;
+    }
+
+    public void enterPassword(String password) {
+        this.password = password;
+    }
+}
+QA example: In a Selenium framework, I keep WebElements private inside Page Object classes and expose public methods such as login() and clickSubmit(). This protects the internal page implementation and makes test scripts cleaner.
+3. Explain inheritance and its types.
+Inheritance is an OOP concept where one class acquires the properties and methods of another class using the extends keyword.
+
+The class providing properties is called the parent or superclass, and the class inheriting them is called the child or subclass.
+
+Java supports these types of inheritance:
+1. Single inheritance: One child inherits from one parent.
+2. Multilevel inheritance: A class inherits from a child class, forming multiple levels.
+3. Hierarchical inheritance: Multiple child classes inherit from one parent.
+4. Multiple inheritance: One class inherits from multiple parents. Java does not support this through classes, but it supports multiple inheritance of type through interfaces.
+QA example: I create a BaseTest class containing browser initialization, driver management, and teardown methods. My LoginTest and BookingTest classes extend BaseTest and reuse those common methods.
+4. Why doesn't Java support multiple inheritance through classes?
+Java does not support multiple inheritance through classes mainly to avoid ambiguity and complexity.
+
+For example, if two parent classes contain the same method and a child class inherits both, the compiler may not know which implementation should be used. This is commonly called the diamond problem.
+
+To avoid this ambiguity, Java allows a class to extend only one class.
+
+However, Java supports implementing multiple interfaces, allowing a class to inherit multiple behavioral contracts.
+
+Example:
+interface A {
+    void display();
+}
+
+interface B {
+    void display();
+}
+
+class C implements A, B {
+
+    public void display() {
+        System.out.println("Display method");
+    }
+}
+Here, class C implements both interfaces and provides its own implementation.
+5. What is polymorphism?
+Polymorphism means one name or behavior can take multiple forms.
+
+In Java, polymorphism allows us to perform similar operations in different ways depending on the method parameters or the actual object.
+
+There are two main types:
+- Compile-time polymorphism, achieved through method overloading.
+- Runtime polymorphism, achieved through method overriding.
+QA example: In our automation framework, we can create overloaded methods to perform different types of searches. We can also override browser-specific behavior in child classes.
+
+Polymorphism improves flexibility, code reusability, and maintainability.
+6. Explain compile-time and runtime polymorphism.
+Java supports two types of polymorphism.
+
+Compile-time polymorphism: It is achieved through method overloading. The compiler identifies which method to execute based on the method name and parameter list.
+
+Runtime polymorphism: It is achieved through method overriding. The JVM determines which overridden instance method to execute based on the actual object at runtime.
+
+Example:
+class Search {
+
+    void search(String name) {
+        System.out.println(name);
+    }
+
+    void search(int id) {
+        System.out.println(id);
+    }
+}
+This is compile-time polymorphism.
+
+Runtime example:
+class Browser {
+    void launch() {
+        System.out.println("Browser launched");
+    }
+}
+
+class Chrome extends Browser {
+    @Override
+    void launch() {
+        System.out.println("Chrome launched");
+    }
+}
+Browser browser = new Chrome();
+browser.launch();
+The Chrome implementation executes at runtime.
+7. What is method overloading?
+Method overloading means defining multiple methods with the same name in the same class but with different parameter lists.
+
+The difference can be in the number of parameters, parameter types, or parameter order.
+
+Method overloading is an example of compile-time polymorphism.
+
+Important: Changing only the return type is not sufficient to overload a method.
+
+Example:
+class Login {
+
+    void login(String username) {
+        System.out.println(username);
+    }
+
+    void login(String username, String password) {
+        System.out.println(username + password);
+    }
+
+    void login(int userId) {
+        System.out.println(userId);
+    }
+}
+QA example: I can create overloaded clickElement() or waitForElement() utility methods to support different input types or waiting conditions.
+8. What is method overriding?
+Method overriding occurs when a child class provides its own implementation of an instance method already defined in its parent class.
+
+The method name and parameter list must match, and the return type must be the same or covariant.
+
+We use the @Override annotation to indicate that a method is being overridden.
+
+Method overriding is an example of runtime polymorphism.
+
+Example:
+class Parent {
+    void display() {
+        System.out.println("Parent method");
+    }
+}
+
+class Child extends Parent {
+    @Override
+    void display() {
+        System.out.println("Child method");
+    }
+}
+QA example: I can override a common browser initialization method in a child test class if that particular test suite requires browser-specific setup.
+9. Difference between method overloading and overriding.
+Method overloading	Method overriding
+Same method name with different parameters	Same method signature in parent and child
+Usually happens within the same class	Requires inheritance
+Compile-time polymorphism	Runtime polymorphism
+Return type alone cannot distinguish methods	Return type must be compatible
+Inheritance is not mandatory	Inheritance is required
+Static methods can be overloaded	Static methods are hidden, not overridden
+
+
+Interview explanation:
+
+"Overloading means creating multiple methods with the same name but different parameter lists. Overriding means redefining a parent class method in a child class with the same signature. Overloading is resolved at compile time, whereas overriding is resolved at runtime."
+10. Can we overload static methods?
+Yes, we can overload static methods in Java.
+
+Method overloading depends on the method name and parameter list, not whether the method is static or non-static.
+
+Example:
+class Utility {
+
+    static void waitFor(int seconds) {
+        System.out.println(seconds);
+    }
+
+    static void waitFor(String condition) {
+        System.out.println(condition);
+    }
+}
+Both methods are static, but their parameter lists are different.
+
+Therefore, Java allows static method overloading.
+11. Can we override static methods?
+No, static methods cannot be overridden in Java because they belong to the class rather than individual objects.
+
+If a child class defines a static method with the same signature as its parent class, it is called method hiding, not method overriding.
+
+Example:
+class Parent {
+    static void display() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+    static void display() {
+        System.out.println("Child");
+    }
+}
+The method called depends on the reference type when accessed through a class or reference, not runtime object polymorphism.
+12. Can we override private methods?
+No, private methods cannot be overridden because they are accessible only within the class in which they are declared.
+
+A private method is not inherited by the child class.
+
+If the child class declares a method with the same name and signature, it is considered a separate method, not an overridden method.
+
+Example:
+class Parent {
+
+    private void display() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+
+    void display() {
+        System.out.println("Child");
+    }
+}
+Here, the child's display method is independent of the parent's private method.
+13. Can we override final methods?
+No, we cannot override final methods in Java.
+
+When a method is declared with the final keyword, its implementation cannot be changed by subclasses.
+
+Example:
+class Parent {
+
+    final void display() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+
+    // Cannot override display()
+}
+The compiler generates an error if we attempt to override the final method.
+
+Remember:
+- Final variable: cannot be reassigned after initialization.
+- Final method: cannot be overridden.
+- Final class: cannot be extended.
+14. What is abstraction?
+Abstraction is an OOP concept that hides internal implementation details and exposes only essential functionality to the user.
+
+In Java, we achieve abstraction using abstract classes and interfaces.
+
+For example, when we use Selenium WebDriver, we interact with methods such as get(), findElement(), and quit() without needing to understand their complete internal browser implementation.
+
+QA example: We can define common browser operations in an interface and implement them separately for Chrome and Firefox.
+
+This helps reduce implementation dependency and improves maintainability.
+15. Difference between abstraction and encapsulation.
+Both are OOP principles, but they solve different problems.
+Abstraction	Encapsulation
+Hides implementation details	Protects and controls access to data
+Focuses on what an object does	Focuses on how data is accessed and maintained
+Achieved using abstract classes and interfaces	Achieved using access modifiers and controlled methods
+Reduces implementation complexity	Provides data protection
+
+
+Interview explanation:
+
+"Abstraction hides unnecessary implementation details and exposes only the required functionality. Encapsulation combines data and methods into a single unit and restricts direct access to the data. For example, WebDriver provides abstraction, while private WebElements and public page methods in POM demonstrate encapsulation."
+16. Difference between abstract class and interface.
+Abstract class	Interface
+Declared using abstract class	Declared using interface
+Can have abstract and concrete methods	Can have abstract, default, static, and private methods
+Can have instance variables and constructors	Cannot have constructors or instance variables
+Can have instance and static variables	Fields are implicitly public, static, and final
+A class can extend only one class	A class can implement multiple interfaces
+Can have different access modifiers for members	Interface methods have specific rules depending on their type
+
+
+Interview explanation:
+
+"An abstract class is useful when we want to provide common state and partial implementation to related classes. An interface is useful when we want to define a contract that different classes can implement. In automation frameworks, I can use an interface to define browser operations and separate implementations for different browsers."
+
+Example:
+interface BrowserActions {
+    void launchBrowser();
+    void closeBrowser();
+}
+
+class ChromeBrowser implements BrowserActions {
+
+    public void launchBrowser() {
+        System.out.println("Chrome launched");
+    }
+
+    public void closeBrowser() {
+        System.out.println("Chrome closed");
+    }
+}
+17. Can an abstract class have a constructor?
+Yes, an abstract class can have a constructor.
+
+Even though we cannot create an object directly from an abstract class, its constructor is executed when a concrete child class object is created.
+
+It is mainly used to initialize common variables and shared resources.
+
+Example:
+abstract class BaseTest {
+
+    BaseTest() {
+        System.out.println("BaseTest constructor");
+    }
+}
+
+class LoginTest extends BaseTest {
+
+    LoginTest() {
+        System.out.println("LoginTest constructor");
+    }
+}
+When we create a LoginTest object, the BaseTest constructor executes first, followed by the LoginTest constructor.
+
+QA example: We can use a BaseTest constructor to initialize common configuration data, although browser setup is often better handled through explicit setup methods or TestNG lifecycle annotations.
+18. Can an interface have variables and implemented methods?
+Yes. Java interfaces can contain variables and implemented methods, subject to specific rules.
+- Variables declared in an interface are implicitly public static final.
+- Interfaces can have abstract methods.
+- From Java 8, interfaces support default and static methods with implementations.
+- From Java 9, interfaces can also contain private methods to reuse internal logic.
+Example:
+interface Browser {
+
+    int TIMEOUT = 30;
+
+    void launch();
+
+    default void close() {
+        System.out.println("Closing browser");
+    }
+
+    static void browserInfo() {
+        System.out.println("Browser interface");
+    }
+}
+Here, TIMEOUT is a constant, launch() is abstract, close() is a default method, and browserInfo() is a static method.
+19. Can an interface extend another interface?
+Yes, an interface can extend another interface using the extends keyword.
+
+An interface can extend multiple interfaces, unlike a class, which can extend only one class.
+
+Example:
+interface Login {
+    void login();
+}
+
+interface Logout {
+    void logout();
+}
+
+interface UserActions extends Login, Logout {
+    void dashboard();
+}
+Here, UserActions inherits the contracts of both Login and Logout.
+
+A class implementing UserActions must implement all inherited abstract methods unless it is itself abstract.
+20. Can a class implement multiple interfaces?
+Yes, Java supports multiple interface implementation.
+
+A class can implement multiple interfaces using the implements keyword. This helps achieve multiple inheritance of type without the ambiguity of multiple class inheritance.
+
+Example:
+interface Login {
+    void login();
+}
+
+interface Logout {
+    void logout();
+}
+
+class User implements Login, Logout {
+
+    public void login() {
+        System.out.println("Login");
+    }
+
+    public void logout() {
+        System.out.println("Logout");
+    }
+}
+QA example: An automation class can implement multiple interfaces for browser actions, screenshots, and reporting capabilities.
+
+One important point: if two interfaces provide conflicting default methods with the same signature, the implementing class must resolve the conflict explicitly.
+21. What is the this keyword?
+The this keyword in Java refers to the current object.
+
+It is commonly used to differentiate instance variables from local variables when they have the same name.
+
+It can also be used to:
+- Call another constructor in the same class using this().
+- Call current class methods.
+- Pass the current object as an argument.
+- Return the current object from a method.
+Example:
+class Employee {
+
+    String name;
+
+    Employee(String name) {
+        this.name = name;
+    }
+}
+Here, this.name refers to the instance variable, while name refers to the constructor parameter.
+
+QA example: In Page Object Model classes, we can use this.driver = driver to assign the constructor parameter to the current object's WebDriver variable.
+22. What is the super keyword?
+The super keyword refers to the immediate parent class object or members.
+
+It is mainly used for three purposes:
+1. Access parent class variables.
+2. Call parent class methods.
+3. Call parent class constructors using super().
+Example:
+class Parent {
+
+    String name = "Parent";
+
+    void display() {
+        System.out.println("Parent method");
+    }
+}
+
+class Child extends Parent {
+
+    String name = "Child";
+
+    void show() {
+        System.out.println(super.name);
+        super.display();
+    }
+}
+Here, super.name accesses the parent variable, and super.display() calls the parent method.
+
+Important: super() must be the first statement in a constructor when explicitly used.
+23. What is constructor overloading?
+Constructor overloading means defining multiple constructors in the same class with different parameter lists.
+
+It allows us to initialize objects in different ways depending on the information available.
+
+Example:
+class Employee {
+
+    String name;
+    int id;
+
+    Employee() {
+        name = "Unknown";
+    }
+
+    Employee(String name) {
+        this.name = name;
+    }
+
+    Employee(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+}
+Here, we have three constructors with different parameter lists.
+
+QA example: We can create different constructors in page classes to initialize the driver, configuration, or test data depending on the framework design.
+24. Can a constructor be inherited?
+No, constructors cannot be inherited in Java.
+
+However, when we create a child class object, the parent class constructor executes as part of the object initialization process.
+
+If we do not explicitly call a parent constructor, Java inserts an implicit super() call when possible.
+
+Example:
+class Parent {
+
+    Parent() {
+        System.out.println("Parent constructor");
+    }
+}
+
+class Child extends Parent {
+
+    Child() {
+        System.out.println("Child constructor");
+    }
+}
+When we create a Child object, the Parent constructor executes first, followed by the Child constructor.
+25. Can a constructor be overridden?
+No, constructors cannot be overridden because constructors are not inherited by child classes.
+
+Method overriding requires inheritance of an instance method, but constructors are used specifically for object initialization.
+
+However, constructors can be overloaded within the same class by changing their parameter lists.
+
+This is an important interview distinction:
+- Constructor overloading: Yes.
+- Constructor overriding: No.
+- Constructor inheritance: No.
+26. What is composition?
+Composition is an OOP relationship where one class contains an object of another class and uses its functionality.
+
+It represents a strong has-a relationship, where the contained object is typically owned by the containing object.
+
+Example:
+class Engine {
+
+    void start() {
+        System.out.println("Engine started");
+    }
+}
+
+class Car {
+
+    private Engine engine = new Engine();
+
+    void startCar() {
+        engine.start();
+    }
+}
+Here, Car has an Engine object and uses its functionality. This is composition.
+
+QA example: In a Selenium framework, a Test class can contain Page Object instances, utility objects, and reporting components. The test class uses these objects instead of implementing every functionality itself.
+
+Composition promotes modularity, reusability, and maintainability.
+27. Difference between inheritance and composition.
+Inheritance	Composition
+Represents an IS-A relationship	Represents a HAS-A relationship
+Uses extends	Uses object references and object creation
+Child inherits parent functionality	One class uses another class's functionality
+Creates tighter coupling between parent and child	Often provides more flexible coupling
+Useful when a genuine subtype relationship exists	Useful when functionality needs to be assembled from components
+
+
+Interview explanation:
+
+"Inheritance allows a child class to reuse properties and methods from a parent class. Composition allows one class to use another class's functionality by maintaining its object reference.
+
+In automation framework design, I use inheritance for common test lifecycle operations through BaseTest and composition for reusable components such as Page Objects, utilities, and reporting classes.
+
+I prefer composition when I need flexibility and independent component changes, rather than extending classes unnecessarily."
